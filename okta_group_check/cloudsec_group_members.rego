@@ -1,14 +1,14 @@
-package main
+package okta.cloudsec.cloudsec_group_members
 import input as tfplan
 import future.keywords.in
 import data.okta_utils as utils
 
 cloudsec_groups = {
-    "OKTA_GROUP_NAME_1",
-    "OKTA_GROUP_NAME_2",
-    "OKTA_GROUP_NAME_3",
-    "OKTA_GROUP_NAME_4",
-    "OKTA_GROUP_NAME_5"
+    "Admin Group 1",
+    "Admin Group 2",
+    "Admin Group 3",
+    "Admin Group 4",
+    "Admin Group 5"
 }
 
 group_id_to_name[id] = name {
@@ -20,7 +20,7 @@ group_id_to_name[id] = name {
 
 deny[msg] {
     tfplan.resource_changes[r].type == "okta_group_memberships"
-    tfplan.resource_changes[r].change.actions[_] == "update"
+    tfplan.resource_changes[r].change.actions[_] in {"update"}
     group_id := tfplan.resource_changes[r].change.after.group_id
     group_name := group_id_to_name[group_id]
     group_name in cloudsec_groups
